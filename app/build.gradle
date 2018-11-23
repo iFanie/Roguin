@@ -14,6 +14,7 @@ android {
         versionCode Version.Build.CODE
         versionName "${ Version.Build.MAJOR }.${ Version.Build.MINOR }"
     }
+
     buildTypes {
         release {
             minifyEnabled false
