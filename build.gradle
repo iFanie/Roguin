@@ -18,6 +18,7 @@ buildscript {
                 ],
 
                 Network : [
+                        GOOGLE   : '15.0.1',
                         FACEBOOK : '4.35.0',
                         TWITTER  : '3.3.0@aar'
                 ]
