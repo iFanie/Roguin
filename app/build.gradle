@@ -13,6 +13,15 @@ android {
 
         versionCode Version.Build.CODE
         versionName "${ Version.Build.MAJOR }.${ Version.Build.MINOR }"
+
+        def properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        manifestPlaceholders = [
+                facebook_api_key    : properties.getProperty('facebook_key', ''),
+                twitter_api_key     : properties.getProperty('twitter_key', ''),
+                twitter_api_secret  : properties.getProperty('twitter_secret', '')
+        ]
     }
 
     buildTypes {
