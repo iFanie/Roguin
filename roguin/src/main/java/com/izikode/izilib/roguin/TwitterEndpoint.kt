@@ -1,17 +1,36 @@
 package com.izikode.izilib.roguin
 
-import com.twitter.sdk.android.core.Callback
-import com.twitter.sdk.android.core.Result
-import com.twitter.sdk.android.core.TwitterCore
-import com.twitter.sdk.android.core.TwitterException
-import com.twitter.sdk.android.core.TwitterSession
+import android.util.Log
+import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
+import android.content.pm.PackageManager
 
 class TwitterEndpoint(
 
     private val twitterLoginButton: TwitterLoginButton
 
 ) : RoguinEndpoint {
+
+    init {
+        twitterLoginButton.context.let { context ->
+            val app = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+            val metaData = app.metaData
+
+            val twitterConfig = TwitterConfig.Builder(twitterLoginButton.context).apply {
+                twitterAuthConfig(TwitterAuthConfig(
+                    metaData.getString("com.twitter.sdk.ApplicationKey"),
+                    metaData.getString("com.twitter.sdk.ApplicationSecret")
+                ))
+
+                if (BuildConfig.DEBUG) {
+                    logger(DefaultLogger(Log.DEBUG))
+                    debug(true)
+                }
+            }.build()
+
+            Twitter.initialize(twitterConfig)
+        }
+    }
 
     override val isSignedIn: Boolean
         get() = TwitterCore.getInstance().sessionManager.activeSession != null
