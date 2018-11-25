@@ -7,4 +7,18 @@ interface RoguinEndpoint {
      */
     val isSignedIn: Boolean
 
+    /**
+     * Initiates a SignIn flow.
+     *
+     * @param response  The Unit to be invoked when the flow ends.
+     */
+    fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit)
+
+    /**
+     * Initiates a SignOut flow.
+     *
+     * @param response  The Unit to be invoked when the flow ends.
+     */
+    fun requestSignOut(response: (success: Boolean) -> Unit)
+
 }
