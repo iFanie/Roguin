@@ -4,6 +4,11 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion Version.Sdk.BASE
 
+    compileOptions {
+        sourceCompatibility Version.Core.JAVA
+        targetCompatibility Version.Core.JAVA
+    }
+
     defaultConfig {
         minSdkVersion Version.Sdk.MIN
         targetSdkVersion Version.Sdk.BASE
@@ -24,14 +29,7 @@ dependencies {
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:${ Version.Core.KOTLIN }"
 
-    api ("com.google.android.gms:play-services-auth:${ Version.Network.GOOGLE }") {
-        exclude group: 'com.android.support'
-    }
-
-    api ("com.facebook.android:facebook-login:${ Version.Network.FACEBOOK }") {}
-
-    api ("com.twitter.sdk.android:twitter:${ Version.Network.TWITTER }") {
-        transitive = true
-        exclude group: 'com.android.support'
-    }
+    api ("com.google.android.gms:play-services-auth:${ Version.Network.GOOGLE }")
+    api ("com.facebook.android:facebook-login:${ Version.Network.FACEBOOK }")
+    api ("com.twitter.sdk.android:twitter:${ Version.Network.TWITTER }") { transitive = true }
 }

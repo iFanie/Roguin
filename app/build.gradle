@@ -3,7 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    def properties = new Properties()
+    properties.load(rootProject.file("local.properties").newDataInputStream())
+
     compileSdkVersion Version.Sdk.BASE
+
+    compileOptions {
+        sourceCompatibility Version.Core.JAVA
+        targetCompatibility Version.Core.JAVA
+    }
 
     defaultConfig {
         applicationId "com.izikode.izilib.roguindemo"
@@ -14,13 +22,10 @@ android {
         versionCode Version.Build.CODE
         versionName "${ Version.Build.MAJOR }.${ Version.Build.MINOR }"
 
-        def properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-
         manifestPlaceholders = [
-                facebook_api_key    : properties.getProperty('facebook_key', ''),
-                twitter_api_key     : properties.getProperty('twitter_key', ''),
-                twitter_api_secret  : properties.getProperty('twitter_secret', '')
+                facebook_api_key   : properties.getProperty('facebook_key', ''),
+                twitter_api_key    : properties.getProperty('twitter_key', ''),
+                twitter_api_secret : properties.getProperty('twitter_secret', '')
         ]
     }
 
