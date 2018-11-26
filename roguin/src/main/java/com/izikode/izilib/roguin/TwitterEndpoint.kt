@@ -1,5 +1,6 @@
 package com.izikode.izilib.roguin
 
+import android.content.Context
 import android.util.Log
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
@@ -10,27 +11,6 @@ class TwitterEndpoint(
     private val twitterLoginButton: TwitterLoginButton
 
 ) : RoguinEndpoint {
-
-    init {
-        twitterLoginButton.context.let { context ->
-            val app = context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
-            val metaData = app.metaData
-
-            val twitterConfig = TwitterConfig.Builder(twitterLoginButton.context).apply {
-                twitterAuthConfig(TwitterAuthConfig(
-                    metaData.getString("com.twitter.sdk.ApplicationKey"),
-                    metaData.getString("com.twitter.sdk.ApplicationSecret")
-                ))
-
-                if (BuildConfig.DEBUG) {
-                    logger(DefaultLogger(Log.DEBUG))
-                    debug(true)
-                }
-            }.build()
-
-            Twitter.initialize(twitterConfig)
-        }
-    }
 
     override val isSignedIn: Boolean
         get() = TwitterCore.getInstance().sessionManager.activeSession != null
@@ -62,6 +42,30 @@ class TwitterEndpoint(
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
         TwitterCore.getInstance().sessionManager.clearActiveSession()
         response.invoke(true)
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun initialize(applicationContext: Context) {
+            val app = applicationContext.packageManager.getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
+            val metaData = app.metaData
+
+            val twitterConfig = TwitterConfig.Builder(applicationContext).apply {
+                twitterAuthConfig(TwitterAuthConfig(
+                    metaData.getString("com.twitter.sdk.ApplicationKey"),
+                    metaData.getString("com.twitter.sdk.ApplicationSecret")
+                ))
+
+                if (BuildConfig.DEBUG) {
+                    logger(DefaultLogger(Log.DEBUG))
+                    debug(true)
+                }
+            }.build()
+
+            Twitter.initialize(twitterConfig)
+        }
+
     }
 
 }

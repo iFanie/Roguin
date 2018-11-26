@@ -1,5 +1,7 @@
 package com.izikode.izilib.roguin
 
+import android.content.Context
+import android.content.pm.PackageManager
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -60,6 +62,15 @@ class FacebookEndpoint(
             }
 
         }).executeAsync()
+    }
+
+    companion object {
+
+        @JvmStatic
+        fun initialize(applicationContext: Context) {
+            FacebookSdk.sdkInitialize(applicationContext)
+        }
+
     }
 
 }
