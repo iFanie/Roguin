@@ -8,13 +8,12 @@ import com.izikode.izilib.roguin.FacebookEndpoint
 import com.izikode.izilib.roguin.GoogleEndpoint
 import com.izikode.izilib.roguin.RoguinActivity
 import com.izikode.izilib.roguin.TwitterEndpoint
-import com.twitter.sdk.android.core.identity.TwitterLoginButton
 
 class MainActivity : RoguinActivity() {
 
     private val googleEndpoint by lazy { GoogleEndpoint(this) }
     private val facebookEndpoint by lazy { FacebookEndpoint(this) }
-    private val twitterEndpoint by lazy { TwitterEndpoint(twitterButton) }
+    private val twitterEndpoint by lazy { TwitterEndpoint(this) }
 
     private val googleStatus by lazy { findViewById<TextView>(R.id.googleStatus) }
     private val facebookStatus by lazy { findViewById<TextView>(R.id.facebookStatus) }
@@ -22,7 +21,7 @@ class MainActivity : RoguinActivity() {
 
     private val googleButton by lazy { findViewById<Button>(R.id.googleButton) }
     private val facebookButton by lazy { findViewById<Button>(R.id.facebookButton) }
-    private val twitterButton by lazy { findViewById<TwitterLoginButton>(R.id.twitterButton) }
+    private val twitterButton by lazy { findViewById<Button>(R.id.twitterButton) }
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +59,22 @@ class MainActivity : RoguinActivity() {
                 facebookEndpoint.requestSignIn { success, result, error ->
                     if (success) {
                         facebookStatus.text = "Facebook is CONNECTED"
+                    }
+                }
+            }
+        }
+
+        twitterButton.setOnClickListener {
+            if (twitterEndpoint.isSignedIn) {
+                twitterEndpoint.requestSignOut { success ->
+                    if (success) {
+                        twitterStatus.text = "Twitter is DISCONNECTED"
+                    }
+                }
+            } else {
+                twitterEndpoint.requestSignIn { success, result, error ->
+                    if (success) {
+                        twitterStatus.text = "Twitter is CONNECTED"
                     }
                 }
             }

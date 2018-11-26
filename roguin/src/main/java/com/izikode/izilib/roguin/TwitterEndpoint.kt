@@ -8,9 +8,11 @@ import android.content.pm.PackageManager
 
 class TwitterEndpoint(
 
-    private val twitterLoginButton: TwitterLoginButton
+    private val roguinActivity: RoguinActivity
 
 ) : RoguinEndpoint {
+
+    private val twitterLoginButton = TwitterLoginButton(roguinActivity)
 
     override val isSignedIn: Boolean
         get() = TwitterCore.getInstance().sessionManager.activeSession != null

@@ -50,9 +50,10 @@
         app:layout_constraintTop_toBottomOf="@id/facebookButton"
         android:layout_marginTop="20dp" />
 
-    <com.twitter.sdk.android.core.identity.TwitterLoginButton android:id="@+id/twitterButton"
+    <Button android:id="@+id/twitterButton"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:text="Twitter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/twitterStatus" />
