@@ -31,10 +31,10 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("jks/roguinDemo.jks")
-            storePassword 'OneLoginToRuleThemAll'
-            keyAlias 'roguinDemo'
-            keyPassword 'OneLoginToRuleThemAll'
+            storeFile     file("jks/roguinDemo.jks")
+            storePassword properties.getProperty('demo_keystore_password', '')
+            keyAlias      properties.getProperty('demo_keystore_alias', '')
+            keyPassword   properties.getProperty('demo_keystore_password', '')
         }
     }
 
