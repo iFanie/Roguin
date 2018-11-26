@@ -29,8 +29,17 @@ android {
         ]
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("jks/roguinDemo.jks")
+            storePassword 'OneLoginToRuleThemAll'
+            keyAlias 'roguinDemo'
+            keyPassword 'OneLoginToRuleThemAll'
+        }
+    }
+
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
         }
     }
