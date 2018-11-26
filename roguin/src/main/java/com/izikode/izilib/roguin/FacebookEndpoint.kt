@@ -21,31 +21,39 @@ class FacebookEndpoint(
         }
 
     override fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit) {
-        facebookLoginButton.registerCallback(CallbackManager.Factory.create(), object : FacebookCallback<LoginResult> {
+        CallbackManager.Factory.create().let { callbackManager ->
+            facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
 
-            override fun onSuccess(result: LoginResult?) {
-                facebookLoginButton.removeCallbacks {}
+                override fun onSuccess(result: LoginResult?) {
+                    facebookLoginButton.removeCallbacks {}
+                    roguinActivity.unregisterCallbackManager(callbackManager)
 
-                if (result != null) {
-                    response.invoke(true, parseToProfile(result), null)
-                } else {
+                    if (result != null) {
+                        response.invoke(true, parseToProfile(result), null)
+                    } else {
+                        response.invoke(false, null, null)
+                    }
+                }
+
+                override fun onCancel() {
+                    facebookLoginButton.removeCallbacks {}
+                    roguinActivity.unregisterCallbackManager(callbackManager)
+
                     response.invoke(false, null, null)
                 }
-            }
 
-            override fun onCancel() {
-                facebookLoginButton.removeCallbacks {}
-                response.invoke(false, null, null)
-            }
+                override fun onError(error: FacebookException?) {
+                    facebookLoginButton.removeCallbacks {}
+                    roguinActivity.unregisterCallbackManager(callbackManager)
 
-            override fun onError(error: FacebookException?) {
-                facebookLoginButton.removeCallbacks {}
-                response.invoke(false, null, RoguinException(error))
-            }
+                    response.invoke(false, null, RoguinException(error))
+                }
 
-        })
+            })
 
-        facebookLoginButton.performClick()
+            roguinActivity.registerCallbackManager(callbackManager)
+            facebookLoginButton.performClick()
+        }
     }
 
     private fun parseToProfile(facebookLoginResult: LoginResult) = RoguinProfile().apply {
