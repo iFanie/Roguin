@@ -1,7 +1,6 @@
 package com.izikode.izilib.roguin
 
 import android.content.Context
-import android.content.pm.PackageManager
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -9,9 +8,11 @@ import com.facebook.login.widget.LoginButton
 
 class FacebookEndpoint(
 
-        private val facebookLoginButton: LoginButton
+        private val roguinActivity: RoguinActivity
 
 ) : RoguinEndpoint {
+
+    private val facebookLoginButton = LoginButton(roguinActivity)
 
     override val isSignedIn: Boolean
         get() {
