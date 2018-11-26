@@ -33,13 +33,13 @@
         app:layout_constraintTop_toBottomOf="@id/googleButton"
         android:layout_marginTop="20dp" />
 
-    <com.facebook.login.widget.LoginButton android:id="@+id/facebookButton"
-        android:layout_width="292dp"
+    <Button android:id="@+id/facebookButton"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:text="Facebook"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/facebookStatus"
-        android:layout_marginTop="4dp" />
+        app:layout_constraintTop_toBottomOf="@id/facebookStatus" />
 
     <TextView android:id="@+id/twitterStatus"
         android:layout_width="wrap_content"
