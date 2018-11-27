@@ -21,6 +21,9 @@ class TwitterEndpoint(
         twitterLoginButton.callback = object : Callback<TwitterSession>() {
 
             override fun success(result: Result<TwitterSession>?) {
+                twitterLoginButton.removeCallbacks {}
+                roguinActivity.unregisterLoginButton(twitterLoginButton)
+
                 if (result != null) {
                     response.invoke(true, parseToProfile(result), null)
                 } else {
@@ -29,11 +32,15 @@ class TwitterEndpoint(
             }
 
             override fun failure(exception: TwitterException?) {
+                twitterLoginButton.removeCallbacks {}
+                roguinActivity.unregisterLoginButton(twitterLoginButton)
+
                 response.invoke(false, null, RoguinException(exception))
             }
 
         }
 
+        roguinActivity.registerLoginButton(twitterLoginButton)
         twitterLoginButton.performClick()
     }
 
