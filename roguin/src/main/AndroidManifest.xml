@@ -1,2 +1,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.izikode.izilib.roguin"/>
+    package="com.izikode.izilib.roguin">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="fb${facebook_api_key}" />
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
+
+        <activity android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="fb${facebook_api_key}" />
+            </intent-filter>
+        </activity>
+
+        <meta-data android:name="com.twitter.sdk.ApplicationKey"
+                android:value="${twitter_api_key}" />
+
+        <meta-data android:name="com.twitter.sdk.ApplicationSecret"
+                android:value="${twitter_api_secret}" />
+    </application>
+</manifest>

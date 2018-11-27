@@ -1,19 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView android:id="@+id/googleStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Google is disconnected"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp" />
 
+    <Button android:id="@+id/googleButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Google"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/googleStatus" />
+
+    <TextView android:id="@+id/facebookStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Facebook is disconnected"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/googleButton"
+        android:layout_marginTop="20dp" />
+
+    <Button android:id="@+id/facebookButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/facebookStatus" />
+
+    <TextView android:id="@+id/twitterStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Twitter is disconnected"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/facebookButton"
+        android:layout_marginTop="20dp" />
+
+    <Button android:id="@+id/twitterButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Twitter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/twitterStatus" />
 </android.support.constraint.ConstraintLayout>
