@@ -1,10 +1,30 @@
 buildscript {
     ext {
+        Bintray = [
+                GROUP_ID: 'com.izikode.izilib',
+
+                REPO: 'izilib',
+                NAME: 'roguin',
+
+                DESCRIPTION: 'One-stop-shop for Social Network integrations',
+
+                WEBSITE: 'https://github.com/iFanie/Roguin',
+                GIT: 'https://github.com/iFanie/Roguin.git',
+
+                DEV_ID: 'iFanie',
+                DEV_NAME: 'Fanie Veizis',
+                DEV_EMAIL: 'fanieveizis@gmail.com',
+
+                LICENCE: 'The Apache Software License, Version 2.0',
+                LICENCE_URL: 'http://www.apache.org/licenses/LICENSE-2.0.txt',
+                LICENCES: [ "Apache-2.0" ]
+        ]
+
         Version = [
                 Build : [
-                        CODE  : 0,
+                        CODE  : 1,
                         MAJOR : 0,
-                        MINOR : 0
+                        MINOR : 1
                 ],
 
                 Core : [
@@ -14,8 +34,9 @@ buildscript {
                 ],
 
                 Sdk : [
-                        BASE : 28,
-                        MIN  : 21
+                        BASE   : 28,
+                        MIN    : 21,
+                        COMPAT : '28.0.0'
                 ],
 
                 Network : [
@@ -34,6 +55,9 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:${ Version.Core.GRADLE }"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${ Version.Core.KOTLIN }"
+
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
     }
 }
 
