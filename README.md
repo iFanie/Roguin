@@ -1,12 +1,14 @@
 # Roguin
 One stop shop for Social Network integrations
 
+Use the same code for **Google**, **Facebook** and **Twitter**
+
 ### What is Roguin
-Social Network SDKs can be a pain to setup and maintain. This goes double if you want to add more than one SDK into a 
-single project. With Roguin, the whole process is simplified and Google, Facebook and Twitter are unified and handled
+Social Network integrations can be a pain to write and maintain. This goes double if you want to add more than one Network into a 
+single project. With Roguin, the whole process is simplified and **Google**, **Facebook** and **Twitter** are unified and handled
 with the same code.
 
-#### You can add Sing In With for all three networks with the same exact code!
+#### You can add **'Sing In With'** feature for all three networks with the same exact code!
 
 ### Preparation
 Roguin helps with code but you still need valid Applications as per Social Network regulations and guidelines.
