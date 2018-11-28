@@ -1,4 +1,4 @@
-package com.izikode.izilib.roguin
+package com.izikode.izilib.roguin.helper
 
 import android.content.Intent
 import java.lang.Exception

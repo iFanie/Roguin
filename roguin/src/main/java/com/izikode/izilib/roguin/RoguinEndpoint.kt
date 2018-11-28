@@ -1,5 +1,8 @@
 package com.izikode.izilib.roguin
 
+import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinProfile
+
 interface RoguinEndpoint {
 
     /**
