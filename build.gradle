@@ -22,9 +22,9 @@ buildscript {
 
         Version = [
                 Build : [
-                        CODE  : 1,
+                        CODE  : 2,
                         MAJOR : 0,
-                        MINOR : 1
+                        MINOR : 2
                 ],
 
                 Core : [
@@ -35,7 +35,7 @@ buildscript {
 
                 Sdk : [
                         BASE   : 28,
-                        MIN    : 21,
+                        MIN    : 15,
                         COMPAT : '28.0.0'
                 ],
 
