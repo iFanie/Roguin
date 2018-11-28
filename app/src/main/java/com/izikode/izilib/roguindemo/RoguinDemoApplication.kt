@@ -1,8 +1,8 @@
 package com.izikode.izilib.roguindemo
 
 import android.app.Application
-import com.izikode.izilib.roguin.FacebookEndpoint
-import com.izikode.izilib.roguin.TwitterEndpoint
+import com.izikode.izilib.roguin.endpoint.FacebookEndpoint
+import com.izikode.izilib.roguin.endpoint.TwitterEndpoint
 
 class RoguinDemoApplication : Application() {
 
