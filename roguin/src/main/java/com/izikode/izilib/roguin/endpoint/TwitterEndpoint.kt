@@ -1,10 +1,15 @@
-package com.izikode.izilib.roguin
+package com.izikode.izilib.roguin.endpoint
 
 import android.content.Context
 import android.util.Log
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import android.content.pm.PackageManager
+import com.izikode.izilib.roguin.BuildConfig
+import com.izikode.izilib.roguin.helper.RoguinActivity
+import com.izikode.izilib.roguin.RoguinEndpoint
+import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinToken
 
 class TwitterEndpoint(
 
@@ -17,7 +22,7 @@ class TwitterEndpoint(
     override val isSignedIn: Boolean
         get() = TwitterCore.getInstance().sessionManager.activeSession != null
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit) {
         twitterLoginButton.callback = object : Callback<TwitterSession>() {
 
             override fun success(result: Result<TwitterSession>?) {
@@ -25,7 +30,7 @@ class TwitterEndpoint(
                 roguinActivity.unregisterLoginButton(twitterLoginButton)
 
                 if (result != null) {
-                    response.invoke(true, parseToProfile(result), null)
+                    response.invoke(true, result.toToken(), null)
                 } else {
                     response.invoke(false, null, null)
                 }
@@ -44,9 +49,11 @@ class TwitterEndpoint(
         twitterLoginButton.performClick()
     }
 
-    private fun parseToProfile(twitterLoginResult: Result<TwitterSession>) = RoguinProfile().apply {
-        /* TODO actually parse */
-    }
+    private fun Result<TwitterSession>.toToken() = RoguinToken(
+        endpoint = this@TwitterEndpoint::class,
+        authenticatedToken = this.data.authToken.token,
+        userId = this.data.userId.toString()
+    )
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
         TwitterCore.getInstance().sessionManager.clearActiveSession()

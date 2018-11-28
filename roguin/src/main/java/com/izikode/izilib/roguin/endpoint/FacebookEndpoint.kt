@@ -1,10 +1,14 @@
-package com.izikode.izilib.roguin
+package com.izikode.izilib.roguin.endpoint
 
 import android.content.Context
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.izikode.izilib.roguin.helper.RoguinActivity
+import com.izikode.izilib.roguin.RoguinEndpoint
+import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinToken
 
 class FacebookEndpoint(
 
@@ -20,7 +24,7 @@ class FacebookEndpoint(
             return accessToken != null && !accessToken.isExpired
         }
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, token: RoguinToken?, error: RoguinException?) -> Unit) {
         CallbackManager.Factory.create().let { callbackManager ->
             facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
 
@@ -29,7 +33,7 @@ class FacebookEndpoint(
                     roguinActivity.unregisterCallbackManager(callbackManager)
 
                     if (result != null) {
-                        response.invoke(true, parseToProfile(result), null)
+                        response.invoke(true, result.toToken(), null)
                     } else {
                         response.invoke(false, null, null)
                     }
@@ -56,9 +60,11 @@ class FacebookEndpoint(
         }
     }
 
-    private fun parseToProfile(facebookLoginResult: LoginResult) = RoguinProfile().apply {
-        /* TODO actually parse */
-    }
+    private fun LoginResult.toToken() = RoguinToken(
+        endpoint = this@FacebookEndpoint::class,
+        authenticatedToken = this.accessToken.token,
+        userId = this.accessToken.userId
+    )
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
         GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback {

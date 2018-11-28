@@ -1,4 +1,8 @@
 # Roguin
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Bintray](https://img.shields.io/badge/Bintray-0.2-lightgrey.svg)](https://dl.bintray.com/ifanie/izilib/com/izikode/izilib/roguin/0.2/)
+
 One stop shop for Social Network integrations
 
 Use the same code for **Google**, **Facebook** and **Twitter**
@@ -8,7 +12,7 @@ Social Network integrations can be a pain to write and maintain. This goes doubl
 single project. With Roguin, the whole process is simplified and **Google**, **Facebook** and **Twitter** are unified and handled
 with the same code.
 
-#### You can add **'Sing In With'** feature for all three networks with the same exact code!
+#### You can add a **'Sing In With'** feature for all three networks with the same exact code!
 
 ## Preparation
 Roguin helps with code but you still need valid Applications as per Social Network regulations and guidelines.
@@ -20,7 +24,7 @@ So, you would still need to:
 ## Installation
 #### 1. Dependency
 ```
-implementation 'com.izikode.izilib:roguin:0.1'
+implementation 'com.izikode.izilib:roguin:0.2'
 ```
 
 #### 2. Social Network Application keys
@@ -36,7 +40,11 @@ android {
     }
 }
 ```
-#### 3. Endpoint initialization
+
+#### 3. Extend RoguinActivity
+Every social network SDK uses the ```startActivityForResult``` in one way or another. In the spirit of making stuff as easy as possible, Roguin provides a Base Activity class, ```RoguinActivity``` which handles registering, unregistering, request codes and the lot. Just extend in your Activities and you are done.
+
+#### 4. Endpoint initialization
 Prior to using, the Endpoints you need must be initialized. A good place to do this is in the ```onCreate``` of your app's Application class. And you can do so like this:
 ```kotlin
 override fun onCreate() {
@@ -63,7 +71,7 @@ googleButton.setOnClickListener {
             }
         }
     } else {
-        googleEndpoint.requestSignIn { success, result, error ->
+        googleEndpoint.requestSignIn { success, token, error ->
             if (success) {
                 googleStatus.text = "Google is CONNECTED"
             }
@@ -79,7 +87,7 @@ facebookButton.setOnClickListener {
             }
         }
     } else {
-        facebookEndpoint.requestSignIn { success, result, error ->
+        facebookEndpoint.requestSignIn { success, token, error ->
               if (success) {
                 facebookStatus.text = "Facebook is CONNECTED"
             }
@@ -95,7 +103,7 @@ twitterButton.setOnClickListener {
             }
         }
     } else {
-        twitterEndpoint.requestSignIn { success, result, error ->
+        twitterEndpoint.requestSignIn { success, token, error ->
             if (success) {
                 twitterStatus.text = "Twitter is CONNECTED"
             }
