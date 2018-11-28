@@ -14,13 +14,15 @@ interface RoguinEndpoint {
      * Initiates a SignIn flow.
      *
      * @param response  The Unit to be invoked when the flow ends.
+     *  Unit signature: (success: Boolean, token: RoguinToken?, error: RoguinException?)
      */
-    fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit)
+    fun requestSignIn(response: (success: Boolean, token: RoguinToken?, error: RoguinException?) -> Unit)
 
     /**
      * Initiates a SignOut flow.
      *
      * @param response  The Unit to be invoked when the flow ends.
+     *  Unit signature: (success: Boolean)
      */
     fun requestSignOut(response: (success: Boolean) -> Unit)
 

@@ -40,7 +40,7 @@ class MainActivity : RoguinActivity() {
                     }
                 }
             } else {
-                googleEndpoint.requestSignIn { success, result, error ->
+                googleEndpoint.requestSignIn { success, token, error ->
                     if (success) {
                         googleStatus.text = "Google is CONNECTED"
                     }
@@ -56,7 +56,7 @@ class MainActivity : RoguinActivity() {
                     }
                 }
             } else {
-                facebookEndpoint.requestSignIn { success, result, error ->
+                facebookEndpoint.requestSignIn { success, token, error ->
                     if (success) {
                         facebookStatus.text = "Facebook is CONNECTED"
                     }
@@ -72,7 +72,7 @@ class MainActivity : RoguinActivity() {
                     }
                 }
             } else {
-                twitterEndpoint.requestSignIn { success, result, error ->
+                twitterEndpoint.requestSignIn { success, token, error ->
                     if (success) {
                         twitterStatus.text = "Twitter is CONNECTED"
                     }

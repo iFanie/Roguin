@@ -26,7 +26,7 @@ class GoogleEndpoint(
     override val isSignedIn: Boolean
         get() = GoogleSignIn.getLastSignedInAccount(roguinActivity) != null
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, token: RoguinToken?, error: RoguinException?) -> Unit) {
         roguinActivity.requestResult(googleClient.signInIntent) { success, result ->
             if (!success) {
                 response.invoke(false, null, RoguinException(null, result))
@@ -34,9 +34,9 @@ class GoogleEndpoint(
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result)
 
                 try {
-                    val profile = task.getResult(ApiException::class.java)
+                    val result = task.getResult(ApiException::class.java)
 
-                    response.invoke(true, parseToProfile(profile), null)
+                    response.invoke(true, result.toToken(), null)
                 } catch (googleApiException: ApiException) {
                     response.invoke(false, null,
                         RoguinException(googleApiException, result)
@@ -46,8 +46,8 @@ class GoogleEndpoint(
         }
     }
 
-    private fun parseToProfile(googleSignInAccount: GoogleSignInAccount) = RoguinToken().apply {
-        /* TODO actually parse */
+    private fun GoogleSignInAccount.toToken() = RoguinToken().also { token ->
+
     }
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {

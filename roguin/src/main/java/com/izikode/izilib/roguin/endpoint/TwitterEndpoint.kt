@@ -30,7 +30,7 @@ class TwitterEndpoint(
                 roguinActivity.unregisterLoginButton(twitterLoginButton)
 
                 if (result != null) {
-                    response.invoke(true, parseToProfile(result), null)
+                    response.invoke(true, result.toToken(), null)
                 } else {
                     response.invoke(false, null, null)
                 }
@@ -49,8 +49,8 @@ class TwitterEndpoint(
         twitterLoginButton.performClick()
     }
 
-    private fun parseToProfile(twitterLoginResult: Result<TwitterSession>) = RoguinToken().apply {
-        /* TODO actually parse */
+    private fun Result<TwitterSession>.toToken() = RoguinToken().also { token ->
+
     }
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {

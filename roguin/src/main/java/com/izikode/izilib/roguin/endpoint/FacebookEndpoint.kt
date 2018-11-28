@@ -24,7 +24,7 @@ class FacebookEndpoint(
             return accessToken != null && !accessToken.isExpired
         }
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, token: RoguinToken?, error: RoguinException?) -> Unit) {
         CallbackManager.Factory.create().let { callbackManager ->
             facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
 
@@ -33,7 +33,7 @@ class FacebookEndpoint(
                     roguinActivity.unregisterCallbackManager(callbackManager)
 
                     if (result != null) {
-                        response.invoke(true, parseToProfile(result), null)
+                        response.invoke(true, result.toToken(), null)
                     } else {
                         response.invoke(false, null, null)
                     }
@@ -60,8 +60,8 @@ class FacebookEndpoint(
         }
     }
 
-    private fun parseToProfile(facebookLoginResult: LoginResult) = RoguinToken().apply {
-        /* TODO actually parse */
+    private fun LoginResult.toToken() = RoguinToken().also { token ->
+
     }
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
