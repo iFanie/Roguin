@@ -60,9 +60,11 @@ class FacebookEndpoint(
         }
     }
 
-    private fun LoginResult.toToken() = RoguinToken().also { token ->
-
-    }
+    private fun LoginResult.toToken() = RoguinToken(
+        endpoint = this@FacebookEndpoint::class,
+        authenticatedToken = this.accessToken.token,
+        userId = this.accessToken.userId
+    )
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
         GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback {

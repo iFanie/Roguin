@@ -49,9 +49,11 @@ class TwitterEndpoint(
         twitterLoginButton.performClick()
     }
 
-    private fun Result<TwitterSession>.toToken() = RoguinToken().also { token ->
-
-    }
+    private fun Result<TwitterSession>.toToken() = RoguinToken(
+        endpoint = this@TwitterEndpoint::class,
+        authenticatedToken = this.data.authToken.token,
+        userId = this.data.userId.toString()
+    )
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
         TwitterCore.getInstance().sessionManager.clearActiveSession()

@@ -16,10 +16,7 @@ class GoogleEndpoint(
 ) : RoguinEndpoint {
 
     private val googleClient by lazy {
-        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-
+        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
         GoogleSignIn.getClient(roguinActivity, options)
     }
 
@@ -46,9 +43,11 @@ class GoogleEndpoint(
         }
     }
 
-    private fun GoogleSignInAccount.toToken() = RoguinToken().also { token ->
-
-    }
+    private fun GoogleSignInAccount.toToken() = RoguinToken(
+        endpoint = this@GoogleEndpoint::class,
+        authenticatedToken = this.idToken ?: "",
+        userId = this.id ?: ""
+    )
 
     override fun requestSignOut(response: (success: Boolean) -> Unit) {
         googleClient.signOut().addOnCompleteListener {
