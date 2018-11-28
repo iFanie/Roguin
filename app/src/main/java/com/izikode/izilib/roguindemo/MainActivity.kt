@@ -2,6 +2,7 @@ package com.izikode.izilib.roguindemo
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.izikode.izilib.roguin.endpoint.FacebookEndpoint
@@ -43,6 +44,7 @@ class MainActivity : RoguinActivity() {
                 googleEndpoint.requestSignIn { success, token, error ->
                     if (success) {
                         googleStatus.text = "Google is CONNECTED"
+                        Log.d("Google TOKEN", token.toString())
                     }
                 }
             }
@@ -59,6 +61,7 @@ class MainActivity : RoguinActivity() {
                 facebookEndpoint.requestSignIn { success, token, error ->
                     if (success) {
                         facebookStatus.text = "Facebook is CONNECTED"
+                        Log.d("Facebook TOKEN", token.toString())
                     }
                 }
             }
@@ -75,6 +78,7 @@ class MainActivity : RoguinActivity() {
                 twitterEndpoint.requestSignIn { success, token, error ->
                     if (success) {
                         twitterStatus.text = "Twitter is CONNECTED"
+                        Log.d("Twitter TOKEN", token.toString())
                     }
                 }
             }
