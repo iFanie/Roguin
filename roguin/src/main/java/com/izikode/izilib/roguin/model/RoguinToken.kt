@@ -1,4 +1,14 @@
 package com.izikode.izilib.roguin.model
 
-class RoguinToken {
-}
+import com.izikode.izilib.roguin.RoguinEndpoint
+import kotlin.reflect.KClass
+
+data class RoguinToken(
+
+    val endpoint: KClass<out RoguinEndpoint>,
+
+    val authenticatedToken: String,
+
+    val userId: String
+
+)
