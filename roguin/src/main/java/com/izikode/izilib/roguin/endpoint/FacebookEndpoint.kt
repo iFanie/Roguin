@@ -1,10 +1,14 @@
-package com.izikode.izilib.roguin
+package com.izikode.izilib.roguin.endpoint
 
 import android.content.Context
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
+import com.izikode.izilib.roguin.helper.RoguinActivity
+import com.izikode.izilib.roguin.RoguinEndpoint
+import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinProfile
 
 class FacebookEndpoint(
 

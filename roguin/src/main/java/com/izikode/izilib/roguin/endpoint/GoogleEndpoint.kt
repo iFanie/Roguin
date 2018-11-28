@@ -1,9 +1,13 @@
-package com.izikode.izilib.roguin
+package com.izikode.izilib.roguin.endpoint
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.izikode.izilib.roguin.helper.RoguinActivity
+import com.izikode.izilib.roguin.RoguinEndpoint
+import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinProfile
 
 class GoogleEndpoint(
 
@@ -34,7 +38,9 @@ class GoogleEndpoint(
 
                     response.invoke(true, parseToProfile(profile), null)
                 } catch (googleApiException: ApiException) {
-                    response.invoke(false, null, RoguinException(googleApiException, result))
+                    response.invoke(false, null,
+                        RoguinException(googleApiException, result)
+                    )
                 }
             }
         }

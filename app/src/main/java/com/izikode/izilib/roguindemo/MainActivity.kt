@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import com.izikode.izilib.roguin.FacebookEndpoint
-import com.izikode.izilib.roguin.GoogleEndpoint
-import com.izikode.izilib.roguin.RoguinActivity
-import com.izikode.izilib.roguin.TwitterEndpoint
+import com.izikode.izilib.roguin.endpoint.FacebookEndpoint
+import com.izikode.izilib.roguin.endpoint.GoogleEndpoint
+import com.izikode.izilib.roguin.helper.RoguinActivity
+import com.izikode.izilib.roguin.endpoint.TwitterEndpoint
 
 class MainActivity : RoguinActivity() {
 
