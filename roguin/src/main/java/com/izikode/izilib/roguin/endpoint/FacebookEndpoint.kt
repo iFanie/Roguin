@@ -8,7 +8,7 @@ import com.facebook.login.widget.LoginButton
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.RoguinEndpoint
 import com.izikode.izilib.roguin.helper.RoguinException
-import com.izikode.izilib.roguin.model.RoguinProfile
+import com.izikode.izilib.roguin.model.RoguinToken
 
 class FacebookEndpoint(
 
@@ -24,7 +24,7 @@ class FacebookEndpoint(
             return accessToken != null && !accessToken.isExpired
         }
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit) {
         CallbackManager.Factory.create().let { callbackManager ->
             facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
 
@@ -60,7 +60,7 @@ class FacebookEndpoint(
         }
     }
 
-    private fun parseToProfile(facebookLoginResult: LoginResult) = RoguinProfile().apply {
+    private fun parseToProfile(facebookLoginResult: LoginResult) = RoguinToken().apply {
         /* TODO actually parse */
     }
 

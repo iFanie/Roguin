@@ -9,7 +9,7 @@ import com.izikode.izilib.roguin.BuildConfig
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.RoguinEndpoint
 import com.izikode.izilib.roguin.helper.RoguinException
-import com.izikode.izilib.roguin.model.RoguinProfile
+import com.izikode.izilib.roguin.model.RoguinToken
 
 class TwitterEndpoint(
 
@@ -22,7 +22,7 @@ class TwitterEndpoint(
     override val isSignedIn: Boolean
         get() = TwitterCore.getInstance().sessionManager.activeSession != null
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit) {
         twitterLoginButton.callback = object : Callback<TwitterSession>() {
 
             override fun success(result: Result<TwitterSession>?) {
@@ -49,7 +49,7 @@ class TwitterEndpoint(
         twitterLoginButton.performClick()
     }
 
-    private fun parseToProfile(twitterLoginResult: Result<TwitterSession>) = RoguinProfile().apply {
+    private fun parseToProfile(twitterLoginResult: Result<TwitterSession>) = RoguinToken().apply {
         /* TODO actually parse */
     }
 

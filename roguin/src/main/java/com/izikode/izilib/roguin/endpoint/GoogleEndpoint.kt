@@ -7,7 +7,7 @@ import com.google.android.gms.common.api.ApiException
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.RoguinEndpoint
 import com.izikode.izilib.roguin.helper.RoguinException
-import com.izikode.izilib.roguin.model.RoguinProfile
+import com.izikode.izilib.roguin.model.RoguinToken
 
 class GoogleEndpoint(
 
@@ -26,7 +26,7 @@ class GoogleEndpoint(
     override val isSignedIn: Boolean
         get() = GoogleSignIn.getLastSignedInAccount(roguinActivity) != null
 
-    override fun requestSignIn(response: (success: Boolean, result: RoguinProfile?, error: RoguinException?) -> Unit) {
+    override fun requestSignIn(response: (success: Boolean, result: RoguinToken?, error: RoguinException?) -> Unit) {
         roguinActivity.requestResult(googleClient.signInIntent) { success, result ->
             if (!success) {
                 response.invoke(false, null, RoguinException(null, result))
@@ -46,7 +46,7 @@ class GoogleEndpoint(
         }
     }
 
-    private fun parseToProfile(googleSignInAccount: GoogleSignInAccount) = RoguinProfile().apply {
+    private fun parseToProfile(googleSignInAccount: GoogleSignInAccount) = RoguinToken().apply {
         /* TODO actually parse */
     }
 
