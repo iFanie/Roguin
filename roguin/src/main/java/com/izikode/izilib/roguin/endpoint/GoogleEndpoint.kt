@@ -16,7 +16,11 @@ class GoogleEndpoint(
 ) : RoguinEndpoint {
 
     private val googleClient by lazy {
-        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        val options = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
         GoogleSignIn.getClient(roguinActivity, options)
     }
 
@@ -31,13 +35,10 @@ class GoogleEndpoint(
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result)
 
                 try {
-                    val result = task.getResult(ApiException::class.java)
-
-                    response.invoke(true, result.toToken(), null)
+                    val taskResult = task.getResult(ApiException::class.java)
+                    response.invoke(true, taskResult.toToken(), null)
                 } catch (googleApiException: ApiException) {
-                    response.invoke(false, null,
-                        RoguinException(googleApiException, result)
-                    )
+                    response.invoke(false, null, RoguinException(googleApiException, result))
                 }
             }
         }
