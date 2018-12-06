@@ -79,13 +79,4 @@ class FacebookEndpoint(
         }).executeAsync()
     }
 
-    companion object {
-
-        @JvmStatic
-        fun initialize(applicationContext: Context) {
-            FacebookSdk.sdkInitialize(applicationContext)
-        }
-
-    }
-
 }

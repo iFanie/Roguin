@@ -9,7 +9,6 @@ class RoguinDemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        FacebookEndpoint.initialize(this)
         TwitterEndpoint.initialize(this)
     }
 
