@@ -4,10 +4,10 @@ import android.net.Uri
 
 data class RoguinProfile(
 
-    val email: String,
+    val email: String?,
 
-    val name: String,
+    val name: String?,
 
-    val photo: Uri
+    val photo: Uri?
 
 )
