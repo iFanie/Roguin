@@ -9,6 +9,7 @@ import com.izikode.izilib.roguin.endpoint.FacebookEndpoint
 import com.izikode.izilib.roguin.endpoint.GoogleEndpoint
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.endpoint.TwitterEndpoint
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : RoguinActivity() {
 
@@ -79,6 +80,19 @@ class MainActivity : RoguinActivity() {
                     if (success) {
                         twitterStatus.text = "Twitter is CONNECTED"
                         Log.d("Twitter TOKEN", token.toString())
+                    }
+                }
+            }
+        }
+
+        getProfilesButton.setOnClickListener {
+            arrayOf(googleEndpoint, facebookEndpoint, twitterEndpoint).forEach { endpoint ->
+                if (endpoint.isSignedIn) {
+                    endpoint.requestProfile { success, profile, error ->
+                        if (success) {
+                            Log.d("RoguinEndpoint", endpoint.toString())
+                            Log.d("RoguinProfile", profile.toString())
+                        }
                     }
                 }
             }
