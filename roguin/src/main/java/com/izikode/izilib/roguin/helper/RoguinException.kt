@@ -3,7 +3,7 @@ package com.izikode.izilib.roguin.helper
 import android.content.Intent
 import java.lang.Exception
 
-data class RoguinException(
+open class RoguinException(
 
         /**
          * The error that produced the Exception.
@@ -13,6 +13,11 @@ data class RoguinException(
         /**
          * The unsuccessful data that produced the Exception.
          */
-        val internalIntent: Intent? = null
+        val internalIntent: Intent? = null,
+
+        /**
+         * The error message that produced the Exception.
+         */
+        val internalMessage: String? = null
 
 ) : Exception(internalException)

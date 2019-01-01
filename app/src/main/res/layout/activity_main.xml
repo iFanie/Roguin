@@ -57,4 +57,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/twitterStatus" />
+
+    <Button android:id="@+id/getProfilesButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Get Profiles"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/twitterButton"
+        android:layout_marginTop="20dp" />
 </android.support.constraint.ConstraintLayout>
