@@ -1,5 +1,6 @@
 package com.izikode.izilib.roguin.endpoint
 
+import android.content.Context
 import android.net.Uri
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -113,5 +114,14 @@ class FacebookEndpoint(
         name = this.getString("name"),
         photo = this.getJSONObject("picture")?.getJSONObject("data")?.getString("url")?.let { Uri.parse(it) }
     )
+
+    companion object {
+
+        @JvmStatic
+        fun initialize(applicationContext: Context) {
+            /* Reserved for upcoming functionality */
+        }
+
+    }
 
 }

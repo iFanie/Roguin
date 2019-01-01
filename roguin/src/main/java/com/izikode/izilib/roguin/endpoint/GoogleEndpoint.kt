@@ -1,5 +1,6 @@
 package com.izikode.izilib.roguin.endpoint
 
+import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -73,5 +74,14 @@ class GoogleEndpoint(
         name = this.displayName,
         photo = this.photoUrl
     )
+
+    companion object {
+
+        @JvmStatic
+        fun initialize(applicationContext: Context) {
+            /* Reserved for upcoming functionality */
+        }
+
+    }
 
 }
