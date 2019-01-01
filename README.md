@@ -48,18 +48,23 @@ Every social network SDK uses the ```startActivityForResult``` in one way or ano
 #### 4. Endpoint initialization
 Prior to using, the Endpoints you need must be initialized. A good place to do this is in the ```onCreate``` of your app's Application class. And you can do so like this:
 ```kotlin
-override fun onCreate() {
-    super.onCreate()
-    TwitterEndpoint.initialize(this)
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+
+        GoogleEndpoint.initialize(this)
+        FacebookEndpoint.initialize(this)
+        TwitterEndpoint.initialize(this)
+    }
 }
 ```
 
 ## Usage
 All three wrappers, GoogleEndpoint, FacebookEndpoint and TwitterEndpoint, implement the ```RoguinEndpoint``` interface. So they all expose the following:
-- ```val isSignedIn``` for checking the **Sign In** status for your app.
+- ```val isSignedIn``` for checking the **Sign In status** for your app.
 - ```fun requestSignIn``` for starting a new **Sing In** flow in your app.
 - ```fun requestSignOut``` for starting a new **Sign Out** flow in your app.
-- ```fun requestProfile``` for getting basic profile information of the logged in user.
+- ```fun requestProfile``` for getting **Basic Profile** information of the logged in user.
 
 The following code is an outtake from the demo project in this repository and shows how simple signing in and out of all three networks is with Roguin.
 ```kotlin
