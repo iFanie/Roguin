@@ -5,11 +5,15 @@ import android.util.Log
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.identity.TwitterLoginButton
 import android.content.pm.PackageManager
+import android.net.Uri
 import com.izikode.izilib.roguin.BuildConfig
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.RoguinEndpoint
 import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.helper.UserNotSignedInException
+import com.izikode.izilib.roguin.model.RoguinProfile
 import com.izikode.izilib.roguin.model.RoguinToken
+import com.twitter.sdk.android.core.models.User
 
 class TwitterEndpoint(
 
@@ -59,6 +63,34 @@ class TwitterEndpoint(
         TwitterCore.getInstance().sessionManager.clearActiveSession()
         response.invoke(true)
     }
+
+    override fun requestProfile(response: (success: Boolean, profile: RoguinProfile?, error: RoguinException?) -> Unit) {
+        val session = TwitterCore.getInstance().sessionManager.activeSession
+
+        if (session == null) {
+            response.invoke(false, null, UserNotSignedInException())
+        } else {
+            TwitterCore.getInstance().getApiClient(session).accountService
+                .verifyCredentials(true, true, false)
+                .enqueue(object : Callback<User>() {
+
+                    override fun success(result: Result<User>) {
+                        response.invoke(true, result.data.toProfile(), null)
+                    }
+
+                    override fun failure(e: TwitterException) {
+                        response.invoke(false, null, RoguinException(e))
+                    }
+
+                })
+        }
+    }
+
+    private fun User.toProfile() = RoguinProfile(
+        email = this.email,
+        name = this.name,
+        photo = this.profileImageUrl?.replace("_normal", "")?.let { Uri.parse(it) }
+    )
 
     companion object {
 

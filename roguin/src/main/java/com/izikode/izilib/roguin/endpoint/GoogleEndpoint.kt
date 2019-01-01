@@ -1,5 +1,6 @@
 package com.izikode.izilib.roguin.endpoint
 
+import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -7,6 +8,8 @@ import com.google.android.gms.common.api.ApiException
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.RoguinEndpoint
 import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.helper.UserNotSignedInException
+import com.izikode.izilib.roguin.model.RoguinProfile
 import com.izikode.izilib.roguin.model.RoguinToken
 
 class GoogleEndpoint(
@@ -16,7 +19,11 @@ class GoogleEndpoint(
 ) : RoguinEndpoint {
 
     private val googleClient by lazy {
-        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        val options = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
         GoogleSignIn.getClient(roguinActivity, options)
     }
 
@@ -31,13 +38,10 @@ class GoogleEndpoint(
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result)
 
                 try {
-                    val result = task.getResult(ApiException::class.java)
-
-                    response.invoke(true, result.toToken(), null)
+                    val taskResult = task.getResult(ApiException::class.java)
+                    response.invoke(true, taskResult.toToken(), null)
                 } catch (googleApiException: ApiException) {
-                    response.invoke(false, null,
-                        RoguinException(googleApiException, result)
-                    )
+                    response.invoke(false, null, RoguinException(googleApiException, result))
                 }
             }
         }
@@ -53,6 +57,31 @@ class GoogleEndpoint(
         googleClient.signOut().addOnCompleteListener {
             response.invoke(it.isSuccessful)
         }
+    }
+
+    override fun requestProfile(response: (success: Boolean, profile: RoguinProfile?, error: RoguinException?) -> Unit) {
+        val lastAccount = GoogleSignIn.getLastSignedInAccount(roguinActivity)
+
+        if (lastAccount != null) {
+            response.invoke(true, lastAccount.toProfile(), null)
+        } else {
+            response.invoke(false, null, UserNotSignedInException())
+        }
+    }
+
+    private fun GoogleSignInAccount.toProfile() = RoguinProfile(
+        email = this.email,
+        name = this.displayName,
+        photo = this.photoUrl
+    )
+
+    companion object {
+
+        @JvmStatic
+        fun initialize(applicationContext: Context) {
+            /* Reserved for upcoming functionality */
+        }
+
     }
 
 }

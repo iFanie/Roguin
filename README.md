@@ -1,7 +1,8 @@
 # Roguin
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Bintray](https://img.shields.io/badge/Bintray-0.2-lightgrey.svg)](https://dl.bintray.com/ifanie/izilib/com/izikode/izilib/roguin/0.2/)
+[![Bintray](https://img.shields.io/badge/Bintray-0.3-lightgrey.svg)](https://dl.bintray.com/ifanie/izilib/com/izikode/izilib/roguin/0.3/)
+[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-Roguin-green.svg?style=flat )]( https://android-arsenal.com/details/1/7345 )
 
 One stop shop for Social Network integrations
 
@@ -24,7 +25,7 @@ So, you would still need to:
 ## Installation
 #### 1. Dependency
 ```
-implementation 'com.izikode.izilib:roguin:0.2'
+implementation 'com.izikode.izilib:roguin:0.3'
 ```
 
 #### 2. Social Network Application keys
@@ -47,19 +48,23 @@ Every social network SDK uses the ```startActivityForResult``` in one way or ano
 #### 4. Endpoint initialization
 Prior to using, the Endpoints you need must be initialized. A good place to do this is in the ```onCreate``` of your app's Application class. And you can do so like this:
 ```kotlin
-override fun onCreate() {
-    super.onCreate()
+class MyApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
 
-    FacebookEndpoint.initialize(this)
-    TwitterEndpoint.initialize(this)
+        GoogleEndpoint.initialize(this)
+        FacebookEndpoint.initialize(this)
+        TwitterEndpoint.initialize(this)
+    }
 }
 ```
 
 ## Usage
 All three wrappers, GoogleEndpoint, FacebookEndpoint and TwitterEndpoint, implement the ```RoguinEndpoint``` interface. So they all expose the following:
-- ```val isSignedIn``` for checking the **Sign In** status for your app.
+- ```val isSignedIn``` for checking the **Sign In status** for your app.
 - ```fun requestSignIn``` for starting a new **Sing In** flow in your app.
 - ```fun requestSignOut``` for starting a new **Sign Out** flow in your app.
+- ```fun requestProfile``` for getting **Basic Profile** information of the logged in user.
 
 The following code is an outtake from the demo project in this repository and shows how simple signing in and out of all three networks is with Roguin.
 ```kotlin
@@ -116,7 +121,7 @@ twitterButton.setOnClickListener {
 
 ## Licence
 ```
-Copyright 2018 Fanie Veizis
+Copyright 2018 Fanis Veizis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

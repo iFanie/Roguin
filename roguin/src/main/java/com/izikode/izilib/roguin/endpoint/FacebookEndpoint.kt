@@ -1,6 +1,7 @@
 package com.izikode.izilib.roguin.endpoint
 
 import android.content.Context
+import android.net.Uri
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
@@ -8,7 +9,14 @@ import com.facebook.login.widget.LoginButton
 import com.izikode.izilib.roguin.helper.RoguinActivity
 import com.izikode.izilib.roguin.RoguinEndpoint
 import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinProfile
 import com.izikode.izilib.roguin.model.RoguinToken
+import android.os.Bundle
+import org.json.JSONException
+import org.json.JSONObject
+import com.facebook.GraphRequest
+import com.izikode.izilib.roguin.helper.UserNotSignedInException
+
 
 class FacebookEndpoint(
 
@@ -16,7 +24,9 @@ class FacebookEndpoint(
 
 ) : RoguinEndpoint {
 
-    private val facebookLoginButton = LoginButton(roguinActivity)
+    private val facebookLoginButton = LoginButton(roguinActivity).apply {
+        setReadPermissions(arrayListOf("public_profile", "email"))
+    }
 
     override val isSignedIn: Boolean
         get() {
@@ -79,11 +89,37 @@ class FacebookEndpoint(
         }).executeAsync()
     }
 
+    override fun requestProfile(response: (success: Boolean, profile: RoguinProfile?, error: RoguinException?) -> Unit) {
+        val token = AccessToken.getCurrentAccessToken()
+
+        if (token == null || token.isExpired) {
+            response.invoke(false, null, UserNotSignedInException())
+        } else {
+            GraphRequest.newMeRequest(token) { jsonObject, graphResponse ->
+                try {
+                    response.invoke(true, jsonObject.toProfile(), null)
+                } catch (e: JSONException) {
+                    response.invoke(false, null, RoguinException(e))
+                }
+            }.apply {
+                parameters = Bundle().apply {
+                    putString("fields", "email, name, picture")
+                }
+            }.executeAsync()
+        }
+    }
+
+    private fun JSONObject.toProfile() = RoguinProfile(
+        email = this.getString("email"),
+        name = this.getString("name"),
+        photo = this.getJSONObject("picture")?.getJSONObject("data")?.getString("url")?.let { Uri.parse(it) }
+    )
+
     companion object {
 
         @JvmStatic
         fun initialize(applicationContext: Context) {
-            FacebookSdk.sdkInitialize(applicationContext)
+            /* Reserved for upcoming functionality */
         }
 
     }

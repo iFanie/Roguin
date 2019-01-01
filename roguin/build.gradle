@@ -60,7 +60,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:${ Version.Core.KOTLIN }"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:${ Version.Core.KOTLIN }"
 
     api ("com.google.android.gms:play-services-auth:${ Version.Network.GOOGLE }")
     api ("com.facebook.android:facebook-login:${ Version.Network.FACEBOOK }")

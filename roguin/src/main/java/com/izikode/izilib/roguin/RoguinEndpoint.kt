@@ -1,6 +1,7 @@
 package com.izikode.izilib.roguin
 
 import com.izikode.izilib.roguin.helper.RoguinException
+import com.izikode.izilib.roguin.model.RoguinProfile
 import com.izikode.izilib.roguin.model.RoguinToken
 
 interface RoguinEndpoint {
@@ -25,5 +26,13 @@ interface RoguinEndpoint {
      *  Unit signature: (success: Boolean)
      */
     fun requestSignOut(response: (success: Boolean) -> Unit)
+
+    /**
+     * Requests the authenticated user profile.
+     *
+     * @param resposne  The Unit to be invoked when the flow ends.
+     *  Unit signature: (success: Boolean, profile: RoguinProfile?, error: RoguinException?)
+     */
+    fun requestProfile(response: (success: Boolean, profile: RoguinProfile?, error: RoguinException?) -> Unit)
 
 }
