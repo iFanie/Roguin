@@ -11,16 +11,32 @@ import com.izikode.izilib.roguin.helper.RoguinException
 import com.izikode.izilib.roguin.helper.UserNotSignedInException
 import com.izikode.izilib.roguin.model.RoguinProfile
 import com.izikode.izilib.roguin.model.RoguinToken
+import android.content.pm.PackageManager
+import android.util.Log
 
 class GoogleEndpoint(
 
         private val roguinActivity: RoguinActivity
 
 ) : RoguinEndpoint {
-
+    private var myApiKey: String? = null
     private val googleClient by lazy {
+            
+        try {
+            val ai = nsSocialActivity.packageManager.getApplicationInfo(nsSocialActivity.packageName, PackageManager.GET_META_DATA)
+            val bundle = ai.metaData
+            myApiKey = bundle.getString("google_server_client_id")
+        } catch (e: Exception) {
+            Log.e(
+                "RoguinActivity",
+                "Dear developer. Don't forget to configure <meta-data android:name=\"google_server_client_id\" android:value=\"testValue\"/> in your AndroidManifest.xml file."
+            )
+        }
+            
         val options = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(myApiKey)
+            .requestProfile()
             .requestEmail()
             .build()
 
