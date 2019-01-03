@@ -41,6 +41,10 @@ android {
     }
 }
 ```
+add google_cerver_client meta-data in application tag on your manifest file to get idToken for backend authentication
+<meta-data
+            android:name="google_server_client_id"
+            android:value="paste your google oAuth client clientID" />
 
 #### 3. Extend RoguinActivity
 Every social network SDK uses the ```startActivityForResult``` in one way or another. In the spirit of making stuff as easy as possible, Roguin provides a Base Activity class, ```RoguinActivity``` which handles registering, unregistering, request codes and the lot. Just extend in your Activities and you are done.
